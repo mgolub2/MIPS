@@ -1,0 +1,6 @@
+[submodule "EE471_Lab2"]
+	path = EE471_Lab2
+	url = https://github.com/mgolub2/EE471_Lab2.git
+[submodule "EE471_Lab1"]
+	path = EE471_Lab1
+	url = https://github.com/mgolub2/EE471_Lab1.git
