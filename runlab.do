@@ -56,9 +56,10 @@ vlog "./signExtend.sv"
 vlog "./signExtend_testbench.sv"
 vlog "./datapath.sv" +incdir+./EE471_Lab2 +incdir+./EE471_Lab1
 vlog "./datapath_testbench.sv" +incdir+./EE471_Lab2 +incdir+./EE471_Lab1
-vlog "control.sv"
-vlog "mips.sv"
-vlog "mips_testbench.sv"
+vlog "./control.sv"
+vlog "./mips.sv"
+vlog "./mips_testbench.sv"
+vlog "./register.sv"
 
 # Call vsim to invoke simulator
 #     Make sure the last item on the line is the name of the
