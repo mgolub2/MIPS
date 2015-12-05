@@ -8,7 +8,7 @@ sure that all instructions function.
 module datapath_testbench();
 
 	// Control signals
-	reg clk, RegDst, RegWr, ALUsrc, MemWr, MemToReg, Branch, Jump;
+	reg clk, RegDst, RegWr, ALUsrc, MemWr, MemToReg, Branch, Jump, rst;
 	reg [1:0] ALUcntrl;
 
 	// Instructions from instruction fetch unit.
@@ -23,19 +23,31 @@ module datapath_testbench();
 
 	// datapath module to test
 	datapath dut(
-				.clk(clk), .RegDst(RegDst), .RegWr(RegWr),
-				.ALUsrc(ALUsrc), .ALUcntrl(ALUcntrl), 
-				.MemWr(MemWr), .MemToReg(MemToReg), 
-				.Zero(Zero), .seOut(seOut), 
-				.Instructions(Instructions), .reg_Da(reg_Da));
+				.clk(clk), 
+				.RegDst(RegDst), 
+				.RegWr(RegWr),
+				.ALUsrc(ALUsrc), 
+				.ALUcntrl(ALUcntrl), 
+				.MemWr(MemWr), 
+				.MemToReg(MemToReg), 
+				.Zero(Zero), 
+				.seOut(seOut), 
+				.Instructions(Instructions), 
+				.reg_Da(reg_Da),
+				.rst(rst)
+	);
 
 	parameter Delay = 50000;
 	
 	// Run through instructions to test that each function works
 	initial begin
 		clk = 0;
+		rst = 1;
 		// We won't use op bits
 		Instructions[31:26] = 6'bx;
+		#(Delay * 2);
+		rst = 0;
+		#(Delay * 2);
 
 		// addi $1, $0, 2015
 		RegDst = 0;
