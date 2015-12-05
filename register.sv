@@ -19,7 +19,7 @@ module Register(data_in, data_out, clk, rst);
 		for(ff = 0; ff < width; ff = ff+1)
 			begin: genflops
 				D_FF d(.q(data_out[ff]), 
-						.d(data_in), 
+						.d(data_in[ff]), 
 						.reset(rst), 
 						.clk(clk)
 				);

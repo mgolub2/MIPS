@@ -30,13 +30,13 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	wire [4:0] Aw, Rs, Rd, Rt;
 
 	// Single bit wires for ALU
-	wire overflow, carryout, Negative;
+	wire overflow, carryout, Negative, Zero;
 
 	// Wires for stage registers
 	wire [31:0] reg_if_id_out;
 	wire [107:0] reg_id_ex_out;
 	wire [72:0] reg_ex_mem_out;
-	wire [71:0] reg_ex_mem_out;
+	wire [38:0] reg_mem_wr_out;
 
 	// Selects reg address to which to write.
 	Mux_32_2x1 #(.width(5)) regDstMux(
@@ -52,11 +52,11 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	regfile registerFile(
 			.ReadData1(Da), 
 			.ReadData2(Db), 
-			.WriteData(Dw),
+			.WriteData(reg_mem_wr_out[38:7]),
 			.ReadRegister1(Rs), 
 			.ReadRegister2(Rt), 
-			.WriteRegister(reg_ex_mem_out[6:2]), 
-			.RegWrite(reg_ex_mem_out[1]), 
+			.WriteRegister(reg_mem_wr_out[6:2]), 
+			.RegWrite(reg_mem_wr_out[1]), 
 			.clk(clk)
 	);
 
@@ -127,21 +127,20 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	// MemToReg
 	// 73 total
 	Register #(.width(73)) EX_MEM_register(
-			.data_in({ALUout, reg_id_ex_out[41:3]}), 
+			.data_in({ALUout, reg_id_ex_out[43:3]}), 
 			.data_out(reg_ex_mem_out), 
 			.clk(clk), 
 			.rst(rst)
 	);
 
-	// 32 bits data from ALU
-	// 32 bits data from memory
+	// 32 bits data from memory stage
 	// [4:0] Aw
 	// RegWr
 	// RegDst
-	// 71 total
-	Register #(.width(71)) MEM_WR_register(
-			.data_in({reg_ex_mem_out[72:40], Dout, reg_ex_mem_out[8:2]), 
-			.data_out, 
+	// 39 total
+	Register #(.width(39)) MEM_WR_register(
+			.data_in({Dout, reg_ex_mem_out[8:2]}), 
+			.data_out(reg_mem_wr_out), 
 			.clk(clk), 
 			.rst(rst)
 	);

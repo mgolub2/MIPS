@@ -30,7 +30,6 @@ module datapath_testbench();
 				.ALUcntrl(ALUcntrl), 
 				.MemWr(MemWr), 
 				.MemToReg(MemToReg), 
-				.Zero(Zero), 
 				.seOut(seOut), 
 				.Instructions(Instructions), 
 				.reg_Da(reg_Da),
