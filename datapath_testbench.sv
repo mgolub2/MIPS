@@ -133,7 +133,7 @@ module datapath_testbench();
 		// Imm register
 		Instructions[15:0] = 16'b0;
 		
-		#(Delay * 2);
+		#(Delay * 16);
 
 		$stop;
 	end
