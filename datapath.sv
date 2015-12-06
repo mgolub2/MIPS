@@ -133,13 +133,13 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 			.rst(rst)
 	);
 
-	// 32 bits data from memory stage
+	// 32 bits from mux
 	// [4:0] Aw
 	// RegWr
 	// RegDst
 	// 39 total
 	Register #(.width(39)) MEM_WR_register(
-			.data_in({Dout, reg_ex_mem_out[8:2]}), 
+			.data_in({Dw, reg_ex_mem_out[8:2]}), 
 			.data_out(reg_mem_wr_out), 
 			.clk(clk), 
 			.rst(rst)
