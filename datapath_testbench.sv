@@ -45,9 +45,8 @@ module datapath_testbench();
 		// We won't use op bits
 		Instructions[31:26] = 6'bx;
 		#(Delay * 2);
+		
 		rst = 0;
-		#(Delay * 2);
-
 		// addi $1, $0, 2015
 		RegDst = 0;
 		RegWr = 1;
