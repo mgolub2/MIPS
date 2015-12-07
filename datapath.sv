@@ -4,10 +4,10 @@ Datapth for 32 Bit single cycle mips cpu based on architecture
 from slides 88 and 89.
 */
 module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
-					MemToReg, seOut, Instructions, reg_Da, rst);
+					MemToReg, seOut, Instructions, reg_Da, rst, mem_forward_a, ex_forward_a, mem_forward_b, ex_forward_b);
 
 	// Control signals
-	input clk, rst, RegDst, RegWr, ALUsrc, MemWr, MemToReg;
+	input clk, rst, RegDst, RegWr, ALUsrc, MemWr, MemToReg, mem_forward_a, ex_forward_a, mem_forward_b, ex_forward_b;
 	input [1:0] ALUcntrl;
 
 	// Instructions from instruction fetch unit.
@@ -37,6 +37,11 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	wire [107:0] reg_id_ex_out;
 	wire [72:0] reg_ex_mem_out;
 	wire [38:0] reg_mem_wr_out;
+
+	wire [31:0] ex_forward_out_a;
+	wire [31:0] ex_forward_out_b;
+	wire [31:0] mem_forward_out_b;
+	wire [31:0] mem_forward_out_a;
 
 	// Selects reg address to which to write.
 	Mux_32_2x1 #(.width(5)) regDstMux(
@@ -76,6 +81,31 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 			.bus_a(reg_id_ex_out[107:76]), 
 			.bus_b(ALUin), 
 			.alu_cntr(reg_id_ex_out[1:0])
+	);
+
+	//Mux to foward EX back to ID, placed in front of the MEM_forward mux.
+	Mux_32_2x1 EXForwardMuxA(
+		.out(ex_forward_out_a),
+		.in({}),
+		.select(ex_forward_b),
+	);
+
+	Mux_32_2x1 EXForwardMuxB(
+		.out(ex_forward_out_b),
+		.in({}),
+		.select(ex_forward_b)	
+	);
+
+	Mux_32_2x1 MEMForwardMuxA(
+		.out(ex_forward_out_a),
+		.in({}),
+		.select(ex_forward_b),
+	);
+
+	Mux_32_2x1 MEMForwardMuxB(
+		.out(ex_forward_out_b),
+		.in({}),
+		.select(ex_forward_b)	
 	);
 
 	// Data memory unit
@@ -133,7 +163,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	// MemToReg
 	// 73 total
 	Register #(.width(73)) EX_MEM_register(
-			.data_in({ALUout, reg_id_ex_out[43:3]}), 
+			.data_in({ALUout, reg_id_ex_out[43:3]}), //ALU out can be forwared back to ID
 			.data_out(reg_ex_mem_out), 
 			.clk(clk), 
 			.rst(rst)
@@ -145,7 +175,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	// RegDst
 	// 39 total
 	Register #(.width(39)) MEM_WR_register(
-			.data_in({Dw, reg_ex_mem_out[8:2]}), 
+			.data_in({Dw, reg_ex_mem_out[8:2]}), //DW can be forwared back to ID (or should i be before the mux...)
 			.data_out(reg_mem_wr_out), 
 			.clk(clk), 
 			.rst(rst)
