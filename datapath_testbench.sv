@@ -33,7 +33,11 @@ module datapath_testbench();
 				.seOut(seOut), 
 				.Instructions(Instructions), 
 				.reg_Da(reg_Da),
-				.rst(rst)
+				.rst(rst),
+				.mem_forward_a(mem_forward_a),
+				.ex_forward_a(ex_forward_a),
+				.mem_forward_b(mem_forward_b),
+				.ex_forward_b(ex_forward_b)
 	);
 
 	parameter Delay = 50000;
