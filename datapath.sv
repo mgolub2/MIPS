@@ -95,7 +95,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 		.in({ALUout, mem_forward_out_b}),
 		.select(ex_forward_b)	
 	);
-
+	//Forward the value from the mem stage, or the standard register value.
 	Mux_32_2x1 MEMForwardMuxA(
 		.out(mem_forward_out_a),
 		.in({Dw, Rs}),
