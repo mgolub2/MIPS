@@ -87,7 +87,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	Mux_32_2x1 EXForwardMuxA(
 		.out(ex_forward_out_a),
 		.in({ALUout, mem_forward_out_a}),
-		.select(ex_forward_b),
+		.select(ex_forward_b)
 	);
 
 	Mux_32_2x1 EXForwardMuxB(
@@ -99,7 +99,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	Mux_32_2x1 MEMForwardMuxA(
 		.out(mem_forward_out_a),
 		.in({Dw, Rs}),
-		.select(mem_forward_b),
+		.select(mem_forward_b)
 	);
 
 	Mux_32_2x1 MEMForwardMuxB(
