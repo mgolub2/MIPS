@@ -8,7 +8,7 @@ sure that all instructions function.
 module datapath_testbench();
 
 	// Control signals
-	reg clk, RegDst, RegWr, ALUsrc, MemWr, MemToReg, Branch, Jump, rst;
+	reg clk, RegDst, RegWr, ALUsrc, MemWr, MemToReg, Branch, Jump, rst, mem_forward_a, ex_forward_a, mem_forward_b, ex_forward_b;
 	reg [1:0] ALUcntrl;
 
 	// Instructions from instruction fetch unit.
@@ -54,6 +54,10 @@ module datapath_testbench();
 		ALUcntrl = 2'b0;
 		MemWr = 0;
 		MemToReg = 0;
+		mem_forward_a = 0;
+		ex_forward_a = 0;
+		mem_forward_b = 0;
+		ex_forward_b = 0;
 
 		// Rs register
 		Instructions[25:21] = 5'b00000;
