@@ -33,7 +33,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	wire overflow, carryout, Negative, Zero;
 
 	// Wires for stage registers
-	wire [38:0] reg_if_id_out;
+	wire [42:0] reg_if_id_out;
 	wire [107:0] reg_id_ex_out;
 	wire [72:0] reg_ex_mem_out;
 	wire [38:0] reg_mem_wr_out;
@@ -87,25 +87,25 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	Mux_32_2x1 EXForwardMuxA(
 		.out(ex_forward_out_a),
 		.in({ALUout, mem_forward_out_a}),
-		.select(ex_forward_b)
+		.select(reg_if_id_out[42])
 	);
 
 	Mux_32_2x1 EXForwardMuxB(
 		.out(ex_forward_out_b),
 		.in({ALUout, mem_forward_out_b}),
-		.select(ex_forward_b)	
+		.select(reg_if_id_out[41])	
 	);
 	//Forward the value from the mem stage, or the standard register value.
 	Mux_32_2x1 MEMForwardMuxA(
 		.out(mem_forward_out_a),
-		.in({Dw, Rs}),
-		.select(mem_forward_b)
+		.in({Dw, Da}),
+		.select(reg_if_id_out[40])
 	);
 
 	Mux_32_2x1 MEMForwardMuxB(
 		.out(mem_forward_out_b),
-		.in({Dw, Rt}),
-		.select(mem_forward_b)	
+		.in({Dw, Db}),
+		.select(reg_if_id_out[39])	
 	);
 
 	// Data memory unit
@@ -122,15 +122,19 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 			.select(reg_id_ex_out[0])
 	);
 
-	// 39 bits data, with no added control yet
+	// 39+4 = 43 bits data, with no added control yet
+	// ex_forward_a
+	// ex_forward_b
+	// mem_forward_a
+	// mem_forward_b
 	// RegWr
 	// RegDst
 	// MemWr
 	// MemToReg
 	// ALUsrc
 	// [1:0] ALUcntrl
-	Register #(.width(39)) IF_ID_register(
-			.data_in({Instructions, RegWr, RegDst, MemWr, MemToReg, ALUsrc, ALUcntrl}), 
+	Register #(.width(43)) IF_ID_register(
+			.data_in({ex_forward_a, ex_forward_b, mem_forward_a, mem_forward_b, Instructions, RegWr, RegDst, MemWr, MemToReg, ALUsrc, ALUcntrl}), 
 			.data_out(reg_if_id_out), 
 			.clk(clk), 
 			.rst(rst)

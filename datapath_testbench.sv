@@ -90,6 +90,7 @@ module datapath_testbench();
 		#(Delay * 2);
 
 		// add $1, $1, $2 
+		ex_forward_a = 1;
 		RegDst = 1;
 		RegWr = 1;
 		ALUsrc = 0;
@@ -107,7 +108,7 @@ module datapath_testbench();
 		Instructions[10:0] = 10'bx;
 
 		#(Delay * 2);
-
+		ex_forward_a = 0;
 		// sw $2, 0[$0]
 		RegDst = 1'bx;
 		RegWr = 0;
