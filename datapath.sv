@@ -86,26 +86,26 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	//Mux to foward EX back to ID, placed in front of the MEM_forward mux.
 	Mux_32_2x1 EXForwardMuxA(
 		.out(ex_forward_out_a),
-		.in({}),
+		.in({ALUout, mem_forward_out_a}),
 		.select(ex_forward_b),
 	);
 
 	Mux_32_2x1 EXForwardMuxB(
 		.out(ex_forward_out_b),
-		.in({}),
+		.in({ALUout, mem_forward_out_b}),
 		.select(ex_forward_b)	
 	);
 
 	Mux_32_2x1 MEMForwardMuxA(
-		.out(ex_forward_out_a),
-		.in({}),
-		.select(ex_forward_b),
+		.out(mem_forward_out_a),
+		.in({Dw, Rs}),
+		.select(mem_forward_b),
 	);
 
 	Mux_32_2x1 MEMForwardMuxB(
-		.out(ex_forward_out_b),
-		.in({}),
-		.select(ex_forward_b)	
+		.out(mem_forward_out_b),
+		.in({Dw, Rt}),
+		.select(mem_forward_b)	
 	);
 
 	// Data memory unit
@@ -148,7 +148,8 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	// [1:0] ALUcntrl
 	// 108 total
 	Register #(.width(108)) ID_EX_register(
-			.data_in({Da, se32, Db, Aw, reg_if_id_out[6:0]}), 
+			//.data_in({Da, se32, Db, Aw, reg_if_id_out[6:0]}),
+			.data_in({ex_forward_out_a, se32, ex_forward_out_b, Aw, reg_if_id_out[6:0]}), 
 			.data_out(reg_id_ex_out), 
 			.clk(clk), 
 			.rst(rst)
