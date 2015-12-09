@@ -4,7 +4,9 @@ Datapth for 32 Bit single cycle mips cpu based on architecture
 from slides 88 and 89.
 */
 module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
-					MemToReg, seOut, Instructions, reg_Da, rst, mem_forward_a, ex_forward_a, mem_forward_b, ex_forward_b);
+					MemToReg, seOut, Instructions, reg_Da, rst,
+					mem_forward_a, ex_forward_a, mem_forward_b,
+					ex_forward_b, ex_int_forward, mem_int_forward);
 
 	// Control signals
 	input clk, rst, RegDst, RegWr, ALUsrc, MemWr, MemToReg, mem_forward_a, ex_forward_a, mem_forward_b, ex_forward_b;
@@ -18,6 +20,12 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 
 	//output for jr from da
 	output [31:0] reg_Da;
+
+	//output of intructions 1 and 2 cycles back
+	output [31:0] ex_int_forward;
+	output [31:0] mem_int_forward;
+
+	assign ex_int_forward = reg_if_id_out[39:7];
 
 	// Immediate 16 bits input to sign extender.
 	wire [15:0] Imm16;
@@ -184,6 +192,14 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 			.data_out(reg_mem_wr_out), 
 			.clk(clk), 
 			.rst(rst)
+	);
+
+	//Register to hold an instruction two back from what is currently being fetched. 
+	Register #(.width(32)) TWO_DEL_register(
+		.data_in (reg_if_id_out[39:7]),
+		.data_out(mem_int_forward),
+		.clk(clk),
+		.rst(rst)
 	);
 
 	// Connect register addresses from instruction fetch.

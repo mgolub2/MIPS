@@ -19,6 +19,10 @@ module control (
 	output reg MemToReg, 
 	output reg jump, 
 	output reg branch, 
+	output reg mem_forward_a,
+	output reg ex_forward_a,
+	output reg mem_forward_b,
+	output reg ex_forward_b,
 	input clk, 
 	input [31:0] instruction
 );
@@ -33,6 +37,16 @@ module control (
 
 	//parameters for the ALU operations. 
 	parameter [1:0] ADD = 2'b00, SUB = 2'b01, NOR = 2'b10, SLTU = 2'b11;
+
+	/*Forwarding control singals:
+		mem_forward_a = 0;
+		ex_forward_a = 0;
+		mem_forward_b = 0;
+		ex_forward_b = 0;
+	*/
+	always @ (instruction) begin: forward_logic
+		
+	end
 
 	always @ (instruction) begin: control_logic
 		if (instruction[31:26] == 6'h00) begin //r type case statement
