@@ -24,7 +24,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 
 	// Connections to and from registers.
 	wire [31:0] se32, Dw, Da, Db, 
-				Dout, ALUin, ALUout, Instructions;
+				Dout, ALUin, ALUout;
 
 	// Register addresses
 	wire [4:0] Aw, Rs, Rd, Rt;
@@ -89,10 +89,11 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	Mux_32_2x1 DwMux(
 			.out(Dw), 
 			.in({Dout, reg_ex_mem_out[72:41]}), 
-			.select(reg_id_ex_out[0])
+			.select(reg_ex_mem_out[0])
 	);
 
 	// 39 bits data, with no added control yet
+	// Instructions
 	// RegWr
 	// RegDst
 	// MemWr
