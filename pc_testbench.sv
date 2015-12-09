@@ -11,7 +11,7 @@ module pc_testbench();
 	reg [25:0] target_inst; //target intruction to branch to
 	reg jump, branch, zero, clk, rst; //single bit inputs
 	wire [31:0] inst;
-	reg [31:0] reg_Da
+	reg [31:0] reg_Da;
 
 	parameter DELAY = 50000;
 	

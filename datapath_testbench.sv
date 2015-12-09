@@ -108,8 +108,13 @@ module datapath_testbench();
 		Instructions[10:0] = 10'bx;
 
 		#(Delay * 2);
+<<<<<<< HEAD
 		ex_forward_a = 0;
 		// sw $2, 0[$0]
+=======
+
+		// sw $0, 4[$0]
+>>>>>>> origin/master
 		RegDst = 1'bx;
 		RegWr = 0;
 		ALUsrc = 1;
@@ -120,9 +125,9 @@ module datapath_testbench();
 		// Rs register
 		Instructions[25:21] = 5'b00000;
 		// Rt register
-		Instructions[20:16] = 5'b00010;
+		Instructions[20:16] = 5'b00000;
 		// Imm register
-		Instructions[15:0] = 16'b0;
+		Instructions[15:0] = 16'b0 + 4;
 
 		#(Delay * 2);
 
@@ -140,7 +145,25 @@ module datapath_testbench();
 		Instructions[20:16] = 5'b00011;
 		// Imm register
 		Instructions[15:0] = 16'b0;
-		
+
+		#(Delay * 2);
+
+		// add $5, $1, $0 
+		RegDst = 1;
+		RegWr = 1;
+		ALUsrc = 0;
+		ALUcntrl = 2'b0;
+		MemWr = 0;
+		MemToReg = 0;
+
+		// Rs register
+		Instructions[25:21] = 5'b00001;
+		// Rt register
+		Instructions[20:16] = 5'b00000;
+		// Rd register
+		Instructions[15:11] = 5'b00101;
+		// Dont cares
+		Instructions[10:0] = 10'bx;
 		#(Delay * 16);
 
 		$stop;
