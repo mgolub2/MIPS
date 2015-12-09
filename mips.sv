@@ -59,8 +59,8 @@ module mips (clk, rst);
 		.inst 			(Instructions), 
 		.target_inst    (target_inst), 
 		.seIn 			(signExtend), 
-		.jump       	(jump), 
-		.branch 		(branch), 
+		.jump       	(jump_del), 
+		.branch 		(branch_del), 
 		.clk 			(clk), 
 		.rst 			(rst),
 		.reg_Da     	(reg_Da)
@@ -74,8 +74,8 @@ module mips (clk, rst);
 		.ALUcntrl		(ALUcntrl),
 		.MemWr			(MemWr),
 		.MemToReg		(MemToReg),
-		.jump			(jump), //need to buffer this back a stage 
-		.branch			(branch), //also this
+		.jump_del		(jump_del), //need to buffer this back a stage 
+		.branch_del		(branch_del), //also this
 		.clk			(clk),
 		.instruction 	(Instructions),
 		.mem_forward_a	(mem_forward_a),
