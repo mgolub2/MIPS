@@ -100,7 +100,7 @@ module datapath_testbench();
 
 		#(Delay * 2);
 
-		// sw $2, 0[$0]
+		// sw $0, 4[$0]
 		RegDst = 1'bx;
 		RegWr = 0;
 		ALUsrc = 1;
@@ -111,9 +111,9 @@ module datapath_testbench();
 		// Rs register
 		Instructions[25:21] = 5'b00000;
 		// Rt register
-		Instructions[20:16] = 5'b00010;
+		Instructions[20:16] = 5'b00000;
 		// Imm register
-		Instructions[15:0] = 16'b0;
+		Instructions[15:0] = 16'b0 + 4;
 
 		#(Delay * 2);
 

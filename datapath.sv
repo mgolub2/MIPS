@@ -79,7 +79,8 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	);
 
 	// Data memory unit
-	dataMem dataMemory(.data(Dout), 
+	dataMem dataMemory(
+			.data(Dout), 
 			.address(reg_ex_mem_out[72:41]), 
 			.writedata(reg_ex_mem_out[40:9]),
 			.writeenable(reg_ex_mem_out[1]), 
