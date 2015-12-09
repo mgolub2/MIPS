@@ -57,13 +57,26 @@ module control (
 		.clk     (clk),
 		.rst     (rst),
 	);
-	
+
 	/*Forwarding control singals:
 		mem_forward_a = 0;
 		ex_forward_a = 0;
 		mem_forward_b = 0;
 		ex_forward_b = 0;
 	*/
+
+	//rename wire slices for clarity (shouldnt effect actual delay/speed)
+	wire [4:0] rs_last = ex_int_forward[25:21];
+	wire [4:0] rt_last = ex_int_forward[20:16];
+	wire [4:0] rd_last = ex_int_forward[15:11];
+	wire [4:0] rs_last_last = mem_int_forward[25:21];
+	wire [4:0] rt_last_last = mem_int_forward[20:16];
+	wire [4:0] rd_last_last = mem_int_forward[15:11];
+	wire [5:0] op_last =  ex_int_forward[31:26];
+	wire [5:0] op_last_last = mem_int_forward[31:26];
+	wire [5:0] func_last = ex_int_forward[5:0];
+	wire [5:0] func_last_last = mem_int_forward[5:0];
+
 	always @ (instruction) begin: forward_logic
 
 	end
