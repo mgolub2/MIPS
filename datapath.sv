@@ -42,7 +42,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	Mux_32_2x1 #(.width(5)) regDstMux(
 			.out(Aw), 
 			.in({Rd, Rt}), 
-			.select(reg_id_ex_out[0])
+			.select(reg_if_id_out[5])
 	);
 
 	// Extends imm_16 bits.
