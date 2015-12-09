@@ -24,7 +24,9 @@ module control (
 	output reg mem_forward_b,
 	output reg ex_forward_b,
 	input clk, 
-	input [31:0] instruction
+	input [31:0] instruction,
+	input [31:0] ex_int_forward, //instruction 1 clocks back
+	input [31:0] mem_int_forward //instruction 2 clocks back
 );
 
 	//parameters describing different possible instructions. 
@@ -45,7 +47,7 @@ module control (
 		ex_forward_b = 0;
 	*/
 	always @ (instruction) begin: forward_logic
-		
+
 	end
 
 	always @ (instruction) begin: control_logic

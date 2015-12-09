@@ -45,7 +45,13 @@ module mips (clk, rst);
 		.MemToReg	    (MemToReg),
 		.seOut			(signExtend), 
 		.Instructions	(Instructions),
-		.reg_Da			(reg_Da)
+		.reg_Da			(reg_Da),
+		.mem_forward_a  (mem_forward_a),
+		.ex_forward_a   (ex_forward_a),
+		.mem_forward_b  (mem_forward_b),
+		.ex_forward_b   (ex_forward_b),
+		.ex_int_forward (ex_int_forward),
+		.mem_int_forward(mem_int_forward)
 	);
 
 	//Program counter, reads from intruction memory
@@ -68,10 +74,16 @@ module mips (clk, rst);
 		.ALUcntrl		(ALUcntrl),
 		.MemWr			(MemWr),
 		.MemToReg		(MemToReg),
-		.jump			(jump),
-		.branch			(branch),
+		.jump			(jump), //need to buffer this back a stage 
+		.branch			(branch), //also this
 		.clk			(clk),
-		.instruction 	(Instructions)
+		.instruction 	(Instructions),
+		.mem_forward_a	(mem_forward_a),
+		.ex_forward_a 	(ex_forward_a),
+		.mem_forward_b	(mem_forward_b),
+		.ex_forward_b 	(ex_forward_b),
+		.ex_int_forward (ex_int_forward),
+		.mem_int_forward(mem_int_forward),,
 	);
 
 endmodule
