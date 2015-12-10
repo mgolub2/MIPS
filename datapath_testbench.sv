@@ -108,13 +108,9 @@ module datapath_testbench();
 		Instructions[10:0] = 10'bx;
 
 		#(Delay * 2);
-<<<<<<< HEAD
 		ex_forward_a = 0;
-		// sw $2, 0[$0]
-=======
 
 		// sw $0, 4[$0]
->>>>>>> origin/master
 		RegDst = 1'bx;
 		RegWr = 0;
 		ALUsrc = 1;

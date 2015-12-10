@@ -72,17 +72,17 @@ vlog "./register.sv"
 
 #do signExtend_wave.do
 
-vsim -voptargs="+acc" -t 1ps -lib work datapath_testbench
+#vsim -voptargs="+acc" -t 1ps -lib work datapath_testbench
 # Source the wave do file
 #     This should be the file that sets up the signal window for
 #     the module you are testing.
 
-do datapath_wave.do
+#do datapath_wave.do
 
-#vsim -voptargs="+acc" -t 1ps -lib work mips_testbench
+vsim -voptargs="+acc" -t 1ps -lib work mips_testbench
 #vsim -voptargs="+acc" -t 1ps -lib work pc_testbench
 #do pc.do
-#do mips.do
+do mips.do
 
 # Set the window types
 view wave
