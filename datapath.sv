@@ -198,7 +198,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 
 	//Register to hold an instruction two back from what is currently being fetched. 
 	Register #(.width(32)) TWO_DEL_register(
-		.data_in (reg_if_id_out[39:7]),
+		.data_in (reg_if_id_out[38:7]),
 		.data_out(mem_int_forward),
 		.clk(clk),
 		.rst(rst)

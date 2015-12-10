@@ -10,7 +10,7 @@ An R type instruction has the top 6 bits set to 0.
 */
 
 module control (
-	output reg [25:0] target_inst, 
+	//output reg [25:0] target_inst, 
 	output reg RegDst, 
 	output reg RegWr, 
 	output reg ALUsrc, 
@@ -44,14 +44,14 @@ module control (
 	reg jump, branch;
 
 	//delay branch and jump flags by one clock (datapathy)
-	Register branchDelayer(
+	Register #(.width(1)) branchDelayer(
 		.data_in (branch),
 		.data_out(branch_del),
 		.clk     (clk),
 		.rst     (rst)
 	);
 
-	Register jumpDelayer(
+	Register #(.width(1)) jumpDelayer(
 		.data_in (jump),
 		.data_out(jump_del),
 		.clk     (clk),
@@ -80,12 +80,12 @@ module control (
 	wire[4:0] rt = instruction[20:16];
 
 	always @ (*) begin: forward_logic
-		if(rst) begin : rst_statement
+		/*if(rst) begin : rst_statement
 			mem_forward_a = 1'b0;
 			mem_forward_b = 1'b0;
 			ex_forward_a = 1'b0;
 			ex_forward_b = 1'b0;
-		end
+		end*/
 		//forawrd ex a
 		if(rd_last == rs & rd_last != 0 & op_last == 0) begin
 			ex_forward_a = 1'b1;
@@ -132,7 +132,7 @@ module control (
 					MemToReg <= 1'bx;
 					jump <= 1'b1;
 					branch <= 1'b1;
-					target_inst <= 25'hxxxxxxx;
+					//target_inst <= 25'hxxxxxxx;
 				end
 				lw_subu: begin //sub unsigned
 					RegDst <= 1'b1;
@@ -143,7 +143,7 @@ module control (
 					MemToReg <= 1'b0;
 					jump <= 1'b0;
 					branch <= 1'b0;
-					target_inst <= 25'hxxxxxxx;
+					//target_inst <= 25'hxxxxxxx;
 				end
 				norr: begin //not or
 					RegDst <= 1'b1;
@@ -154,7 +154,7 @@ module control (
 					MemToReg <= 1'b0;
 					jump <= 1'b0;
 					branch <= 1'b0;
-					target_inst <= 25'hxxxxxxx;
+					//target_inst <= 25'hxxxxxxx;
 				end
 				sltu_sw: begin //set less than unsigned
 					RegDst <= 1'b1;
@@ -165,7 +165,7 @@ module control (
 					MemToReg <= 1'b0;
 					jump <= 1'b0;
 					branch <= 1'b0;
-					target_inst <= 25'hxxxxxxx;
+					//target_inst <= 25'hxxxxxxx;
 				end
 				default: begin //if we end up here, something went wrong
 					RegDst <= 1'bx;
@@ -176,7 +176,7 @@ module control (
 					MemToReg <= 1'bx;
 					jump <= 1'bx;
 					branch <= 1'bx;
-					target_inst <= 25'hxxxxxxx;
+					//target_inst <= 25'hxxxxxxx;
 				end
 			endcase
 		end else begin
@@ -190,7 +190,7 @@ module control (
 					MemToReg <= 1'b0;
 					jump <= 1'b0;
 					branch <= 1'b0;
-					target_inst <= 25'hxxxxxxx;
+					//target_inst <= 25'hxxxxxxx;
 				end
 				bltz: begin //branch less than zero
 					RegDst <= 1'bx;
@@ -201,7 +201,7 @@ module control (
 					MemToReg <= 1'bx;
 					jump <= 1'b0;
 					branch <= 1'b1;
-					target_inst <= 25'hxxxxxxx;
+					//target_inst <= 25'hxxxxxxx;
 				end
 				j: begin //jump
 					RegDst <= 1'bx;
@@ -212,7 +212,7 @@ module control (
 					MemToReg <= 1'bx;
 					jump <= 1'b1;
 					branch <= 1'b0; //Due to how jr is implemented, this must be 0
-					target_inst <= instruction[25:0];
+					//target_inst <= instruction[25:0];
 				end
 				lw_subu: begin //load word
 					RegDst <= 1'b0;
@@ -223,7 +223,7 @@ module control (
 					MemToReg <= 1'b1;
 					jump <= 1'b0;
 					branch <= 1'b0;
-					target_inst <= 25'hxxxxxxx;
+					//target_inst <= 25'hxxxxxxx;
 				end
 				sltu_sw: begin //store word
 					RegDst <= 1'bx;
@@ -234,7 +234,7 @@ module control (
 					MemToReg <= 1'b0;
 					jump <= 1'b0;
 					branch <= 1'b0;
-					target_inst <= 25'hxxxxxxx;
+					//target_inst <= 25'hxxxxxxx;
 				end
 				default: begin
 					RegDst <= 1'bx;
@@ -245,7 +245,7 @@ module control (
 					MemToReg <= 1'bx;
 					jump <= 1'bx;
 					branch <= 1'bx;
-					target_inst <= 25'hxxxxxxx;
+					//target_inst <= 25'hxxxxxxx;
 				end
 			endcase
 		end
