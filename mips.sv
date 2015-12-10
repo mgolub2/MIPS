@@ -83,7 +83,7 @@ module mips (clk, rst);
 		.mem_forward_b	(mem_forward_b),
 		.ex_forward_b 	(ex_forward_b),
 		.ex_int_forward (ex_int_forward),
-		.mem_int_forward(mem_int_forward),,
+		.mem_int_forward(mem_int_forward)
 	);
 
 endmodule

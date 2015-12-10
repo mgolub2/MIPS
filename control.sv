@@ -55,7 +55,7 @@ module control (
 		.data_in (jump),
 		.data_out(jump_del),
 		.clk     (clk),
-		.rst     (rst),
+		.rst     (rst)
 	);
 
 	/*Forwarding control singals:
@@ -76,6 +76,8 @@ module control (
 	wire [5:0] op_last_last = mem_int_forward[31:26];
 	wire [5:0] func_last = ex_int_forward[5:0];
 	wire [5:0] func_last_last = mem_int_forward[5:0];
+	wire[4:0] rs = instruction[25:21];
+	wire[4:0] rt = instruction[20:16];
 
 	always @ (*) begin: forward_logic
 		if(rst) begin : rst_statement
@@ -85,9 +87,9 @@ module control (
 			ex_forward_b = 1'b0;
 		end
 		//forawrd ex a
-		if(rd_last == rs & rd_last != 0 op_last == 0) begin
+		if(rd_last == rs & rd_last != 0 & op_last == 0) begin
 			ex_forward_a = 1'b1;
-		else if(rt_last == rs & rt_last != 0 & op_last != 0) begin
+		end else if(rt_last == rs & rt_last != 0 & op_last != 0) begin
 			ex_forward_a = 1'b1;
 		end else begin
 			ex_forward_a = 1'b0;
@@ -95,7 +97,7 @@ module control (
 		//forward ex b (only r type)
 		if(rd_last == rt & rd_last != 0 & op_last == 0) begin
 			ex_forward_b = 1'b1;
-		else if(rt_last == rt & rt_last != 0 & op_last != 0) begin
+		end else if(rt_last == rt & rt_last != 0 & op_last != 0) begin
 			ex_forward_b = 1'b1;
 		end else begin
 			ex_forward_b = 1'b0;
@@ -103,15 +105,15 @@ module control (
 		//forward mem a
 		if(rd_last_last == rs & rd_last_last != 0 & op_last_last == 0) begin
 			mem_forward_a = 1'b1;
-		else if(rt_last_last == rs & rt_last_last != 0 & op_last_last != 0) begin
+		end else if(rt_last_last == rs & rt_last_last != 0 & op_last_last != 0) begin
 			mem_forward_a = 1'b1;
 		end else begin
 			mem_forward_a = 1'b0;
 		end
 		//forward mem b (only r type)
 		if(rd_last_last == rt & rd_last_last != 0 & op_last_last == 0) begin
-			mem_forward_b = 1'b1
-		else if(rt_last_last == rt & rt_last_last != 0 & op_last_last != 0) begin
+			mem_forward_b = 1'b1;
+		end else if(rt_last_last == rt & rt_last_last != 0 & op_last_last != 0) begin
 			mem_forward_b = 1'b1;
 		end else begin
 			mem_forward_b = 1'b0;

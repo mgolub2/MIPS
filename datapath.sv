@@ -25,8 +25,6 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	output [31:0] ex_int_forward;
 	output [31:0] mem_int_forward;
 
-	assign ex_int_forward = reg_if_id_out[39:7];
-
 	// Immediate 16 bits input to sign extender.
 	wire [15:0] Imm16;
 
@@ -50,6 +48,8 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	wire [31:0] ex_forward_out_b;
 	wire [31:0] mem_forward_out_b;
 	wire [31:0] mem_forward_out_a;
+
+	assign ex_int_forward = reg_if_id_out[39:7];
 
 	// Selects reg address to which to write.
 	Mux_32_2x1 #(.width(5)) regDstMux(
