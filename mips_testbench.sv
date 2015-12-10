@@ -7,7 +7,7 @@ module mips_testbench();
 
 	reg clk, rst;
 
-	parameter CLK_DELAY = 1500;
+	parameter CLK_DELAY = 50000;
 
 	//awesome mips cpu
 	mips cpu(clk, rst); 
