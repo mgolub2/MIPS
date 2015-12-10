@@ -17,8 +17,6 @@ add wave -noupdate /mips_testbench/cpu/control_logic/jump
 add wave -noupdate /mips_testbench/cpu/control_logic/branch
 add wave -noupdate /mips_testbench/cpu/control_logic/clk
 add wave -noupdate /mips_testbench/cpu/control_logic/instruction
-add wave -noupdate /mips_testbench/cpu/control_logic/I_inst
-add wave -noupdate /mips_testbench/cpu/control_logic/R_inst
 add wave -noupdate /mips_testbench/cpu/data/ALUcntrl
 add wave -noupdate /mips_testbench/cpu/data/Instructions
 add wave -noupdate /mips_testbench/cpu/data/seOut
@@ -72,4 +70,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {0 ps} {291260 ps}
+WaveRestoreZoom {0 ps} {2330080 ps}
