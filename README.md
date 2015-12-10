@@ -1,4 +1,4 @@
-#Single Cycle MIPS CPU. 
+#Pipelined MIPS CPU. 
 
 ## Maximilian Golub, Michael Von Hippel
  * Reduced instruction set, only supports:
@@ -11,4 +11,3 @@
 	* SUBU rd, rs, rt: Reg[rd] = Reg[rs] – Reg[rt]. This is normal, 2’s complement subtraction. “subu” completely ignores overflow
 	* SW rt, imm16(rs): Mem[Reg[rs] + Sign_ext(Imm16)] = Reg[rt].
  * Simulated using modelsim, all gate delays 50ps.
- * Clocked at 100Mhz via the testbench, could possibly go higher. 
