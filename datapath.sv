@@ -52,11 +52,9 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	wire [31:0] mem_forward_out_a;
 
 	wire [31:0] instr_delay_1;
-	wire [31:0] instr_delay_2;
 
 	assign if_id_forward = reg_if_id_out;
 	assign ex_int_forward = instr_delay_1;
-	assign mem_int_forward = instr_delay_2;
 
 	// Selects reg address to which to write.
 	Mux_32_2x1 #(.width(5)) regDstMux(
@@ -77,7 +75,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 			.ReadRegister2(Rt), 
 			.WriteRegister(reg_mem_wr_out[6:2]), 
 			.RegWrite(reg_mem_wr_out[1]), 
-			.clk(clk)
+			.clk(~clk)
 	);
 
 	// Mux for ALU input.
@@ -203,7 +201,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	//Register to hold an instruction two back from what is currently being fetched. 
 	Register #(.width(32)) TWO_DEL_register(
 		.data_in (instr_delay_1),
-		.data_out(instr_delay_2),
+		.data_out(mem_int_forward),
 		.clk(clk),
 		.rst(rst)
 	);

@@ -35,7 +35,7 @@ module mips (clk, rst);
 	wire [31:0] reg_Da;
 	//wire [25:0] target_inst_del;
 	wire [1:0] ALUcntrl;
-	wire Negative, RegDst, RegWr, ALUsrc, MemWr, MemToReg, jump_del, branch_del, ex_forward_a, ex_forward_b, mem_forward_a, mem_forward_b;
+	wire Negative, RegDst, RegWr, ALUsrc, MemWr, MemToReg, jump, branch, ex_forward_a, ex_forward_b, mem_forward_a, mem_forward_b;
 
 	//regfile and data memory, with an ALU between
 	datapath data(
@@ -62,10 +62,10 @@ module mips (clk, rst);
 	//Program counter, reads from intruction memory
 	pc program_counter(
 		.inst 			(Instructions), 
-		.target_inst    (ex_int_forward[25:0]), //for a jump, this will be the target instruction
+		.target_inst    (if_id_forward[25:0]), //for a jump, this will be the target instruction
 		.seIn 			(signExtend), 
-		.jump       	(jump_del), 
-		.branch 		(branch_del), 
+		.jump       	(jump), 
+		.branch 		(branch), 
 		.clk 			(clk), 
 		.rst 			(rst),
 		.reg_Da     	(reg_Da)
@@ -79,10 +79,8 @@ module mips (clk, rst);
 		.ALUcntrl		(ALUcntrl),
 		.MemWr			(MemWr),
 		.MemToReg		(MemToReg),
-		.jump_del		(jump_del), //need to buffer this back a stage 
-		.branch_del		(branch_del), //also this
-		.clk			(clk),
-		.rst            (rst),
+		.jump			(jump), 
+		.branch			(branch), 
 		.instruction 	(if_id_forward),
 		.mem_forward_a	(mem_forward_a),
 		.ex_forward_a 	(ex_forward_a),

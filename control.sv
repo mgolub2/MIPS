@@ -17,14 +17,12 @@ module control (
 	output reg [1:0] ALUcntrl, 
 	output reg MemWr, 
 	output reg MemToReg, 
-	output jump_del, 
-	output branch_del, 
+	output reg jump, 
+	output reg branch, 
 	output reg mem_forward_a,
 	output reg ex_forward_a,
 	output reg mem_forward_b,
 	output reg ex_forward_b,
-	input clk, 
-	input rst,
 	input [31:0] instruction,
 	input [31:0] ex_int_forward, //instruction 1 clocks back
 	input [31:0] mem_int_forward //instruction 2 clocks back
@@ -40,23 +38,6 @@ module control (
 
 	//parameters for the ALU operations. 
 	parameter [1:0] ADD = 2'b00, SUB = 2'b01, NOR = 2'b10, SLTU = 2'b11;
-
-	reg jump, branch;
-
-	//delay branch and jump flags by one clock (datapathy)
-	Register #(.width(1)) branchDelayer(
-		.data_in (branch),
-		.data_out(branch_del),
-		.clk     (clk),
-		.rst     (rst)
-	);
-
-	Register #(.width(1)) jumpDelayer(
-		.data_in (jump),
-		.data_out(jump_del),
-		.clk     (clk),
-		.rst     (rst)
-	);
 
 	/*Forwarding control singals:
 		mem_forward_a = 0;
@@ -174,8 +155,8 @@ module control (
 					ALUcntrl <= 1'bx;
 					MemWr <= 1'bx;
 					MemToReg <= 1'bx;
-					jump <= 1'bx;
-					branch <= 1'bx;
+					jump <= 1'b0;
+					branch <= 1'b0;
 					//target_inst <= 25'hxxxxxxx;
 				end
 			endcase
@@ -243,8 +224,8 @@ module control (
 					ALUcntrl <= 1'bx;
 					MemWr <= 1'bx;
 					MemToReg <= 1'bx;
-					jump <= 1'bx;
-					branch <= 1'bx;
+					jump <= 1'b0;
+					branch <= 1'b0;
 					//target_inst <= 25'hxxxxxxx;
 				end
 			endcase
