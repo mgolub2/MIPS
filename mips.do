@@ -2,7 +2,7 @@ onerror {resume}
 quietly WaveActivateNextPane {} 0
 add wave -noupdate -radix decimal -childformat {{{/mips_testbench/cpu/data/registerFile/data_out[31]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[30]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[29]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[28]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[27]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[26]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[25]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[24]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[23]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[22]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[21]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[20]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[19]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[18]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[17]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[16]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[15]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[14]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[13]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[12]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[11]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[10]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[9]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[8]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[7]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[6]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[5]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[4]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[3]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[2]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[1]} -radix decimal} {{/mips_testbench/cpu/data/registerFile/data_out[0]} -radix decimal}} -expand -subitemconfig {{/mips_testbench/cpu/data/registerFile/data_out[31]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[30]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[29]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[28]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[27]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[26]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[25]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[24]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[23]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[22]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[21]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[20]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[19]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[18]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[17]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[16]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[15]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[14]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[13]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[12]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[11]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[10]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[9]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[8]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[7]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[6]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[5]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[4]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[3]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[2]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[1]} {-height 15 -radix decimal} {/mips_testbench/cpu/data/registerFile/data_out[0]} {-height 15 -radix decimal}} /mips_testbench/cpu/data/registerFile/data_out
 add wave -noupdate /mips_testbench/cpu/data/registerFile/RegWrite
-add wave -noupdate /mips_testbench/cpu/Instructions
+add wave -noupdate -radix hexadecimal /mips_testbench/cpu/Instructions
 add wave -noupdate /mips_testbench/cpu/signExtend
 add wave -noupdate /mips_testbench/cpu/reg_Da
 add wave -noupdate /mips_testbench/cpu/ALUcntrl
@@ -14,10 +14,9 @@ add wave -noupdate /mips_testbench/cpu/control_logic/MemWr
 add wave -noupdate /mips_testbench/cpu/control_logic/MemToReg
 add wave -noupdate /mips_testbench/cpu/control_logic/jump
 add wave -noupdate /mips_testbench/cpu/control_logic/branch
-add wave -noupdate /mips_testbench/cpu/control_logic/clk
 add wave -noupdate /mips_testbench/cpu/control_logic/instruction
 add wave -noupdate /mips_testbench/cpu/data/ALUcntrl
-add wave -noupdate /mips_testbench/cpu/data/Instructions
+add wave -noupdate -radix hexadecimal /mips_testbench/cpu/data/Instructions
 add wave -noupdate /mips_testbench/cpu/data/seOut
 add wave -noupdate /mips_testbench/cpu/data/reg_Da
 add wave -noupdate /mips_testbench/cpu/data/Imm16
@@ -36,7 +35,7 @@ add wave -noupdate /mips_testbench/cpu/data/overflow
 add wave -noupdate /mips_testbench/cpu/data/carryout
 add wave -noupdate /mips_testbench/cpu/data/Negative
 add wave -noupdate /mips_testbench/cpu/data/Zero
-add wave -noupdate /mips_testbench/cpu/program_counter/inst
+add wave -noupdate -radix hexadecimal /mips_testbench/cpu/program_counter/inst
 add wave -noupdate /mips_testbench/cpu/program_counter/seIn
 add wave -noupdate /mips_testbench/cpu/program_counter/target_inst
 add wave -noupdate /mips_testbench/cpu/program_counter/reg_Da
@@ -52,9 +51,7 @@ add wave -noupdate /mips_testbench/cpu/program_counter/sign_ex_mux_out
 add wave -noupdate /mips_testbench/cpu/program_counter/jump_mux_out
 add wave -noupdate /mips_testbench/cpu/program_counter/branch_and_negative
 add wave -noupdate /mips_testbench/cpu/program_counter/jump_r
-add wave -noupdate /mips_testbench/cpu/control_logic/rst
-add wave -noupdate /mips_testbench/cpu/control_logic/jump_del
-add wave -noupdate /mips_testbench/cpu/control_logic/branch_del
+add wave -noupdate -radix hexadecimal /mips_testbench/cpu/control_logic/instruction
 add wave -noupdate /mips_testbench/cpu/control_logic/mem_forward_a
 add wave -noupdate /mips_testbench/cpu/control_logic/ex_forward_a
 add wave -noupdate /mips_testbench/cpu/control_logic/mem_forward_b
@@ -71,8 +68,10 @@ add wave -noupdate /mips_testbench/cpu/control_logic/func_last
 add wave -noupdate /mips_testbench/cpu/control_logic/func_last_last
 add wave -noupdate /mips_testbench/cpu/control_logic/rs
 add wave -noupdate /mips_testbench/cpu/control_logic/rt
+add wave -noupdate /mips_testbench/cpu/data/dataMemory/data
+add wave -noupdate /mips_testbench/cpu/data/dataMemory/datamem
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {894076 ps} 0}
+WaveRestoreCursors {{Cursor 1} {2588579 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 334
 configure wave -valuecolwidth 285
@@ -88,4 +87,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {72694114 ps} {75226626 ps}
+WaveRestoreZoom {1298559 ps} {3831071 ps}

@@ -70,7 +70,7 @@ module control (
 		//forawrd ex a
 		if(rd_last == rs & rd_last != 0 & op_last == 0) begin
 			ex_forward_a <= 1'b1;
-		end else if(rt_last == rs & rt_last != 0 & op_last != 0) begin
+		end else if(rt_last == rs & rt_last != 0 & op_last != 0 & op_last != sltu_sw) begin
 			ex_forward_a <= 1'b1;
 		end else begin
 			ex_forward_a <= 1'b0;
