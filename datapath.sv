@@ -217,7 +217,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	// Connect output to out of reg/dec stage.
 	assign seOut = reg_id_ex_out[75:44];
 
-	// Output from reg/dec stage
-	assign reg_Da = reg_id_ex_out[107:76];
+	// Output  to program counter
+	assign reg_Da = Da;
 
 endmodule
