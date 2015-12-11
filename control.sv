@@ -88,39 +88,39 @@ module control (
 		end*/
 		//forawrd ex a
 		if(rd_last == rs & rd_last != 0 & op_last == 0) begin
-			ex_forward_a = 1'b1;
+			ex_forward_a <= 1'b1;
 		end else if(rt_last == rs & rt_last != 0 & op_last != 0) begin
-			ex_forward_a = 1'b1;
+			ex_forward_a <= 1'b1;
 		end else begin
-			ex_forward_a = 1'b0;
+			ex_forward_a <= 1'b0;
 		end
 		//forward ex b (only r type)
 		if(rd_last == rt & rd_last != 0 & op_last == 0) begin
-			ex_forward_b = 1'b1;
+			ex_forward_b <= 1'b1;
 		end else if(rt_last == rt & rt_last != 0 & op_last != 0) begin
-			ex_forward_b = 1'b1;
+			ex_forward_b <= 1'b1;
 		end else begin
-			ex_forward_b = 1'b0;
+			ex_forward_b <= 1'b0;
 		end
 		//forward mem a
 		if(rd_last_last == rs & rd_last_last != 0 & op_last_last == 0) begin
-			mem_forward_a = 1'b1;
+			mem_forward_a <= 1'b1;
 		end else if(rt_last_last == rs & rt_last_last != 0 & op_last_last != 0) begin
-			mem_forward_a = 1'b1;
+			mem_forward_a <= 1'b1;
 		end else begin
-			mem_forward_a = 1'b0;
+			mem_forward_a <= 1'b0;
 		end
 		//forward mem b (only r type)
 		if(rd_last_last == rt & rd_last_last != 0 & op_last_last == 0) begin
-			mem_forward_b = 1'b1;
+			mem_forward_b <= 1'b1;
 		end else if(rt_last_last == rt & rt_last_last != 0 & op_last_last != 0) begin
-			mem_forward_b = 1'b1;
+			mem_forward_b <= 1'b1;
 		end else begin
-			mem_forward_b = 1'b0;
+			mem_forward_b <= 1'b0;
 		end
 	end
 
-	always @ (instruction) begin: control_logic
+	always @ (*) begin: control_logic
 		if (instruction[31:26] == 6'h00) begin //r type case statement
 			case(instruction[5:0]) 
 				addi_jr: begin //jump register
