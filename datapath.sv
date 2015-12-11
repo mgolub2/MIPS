@@ -131,7 +131,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 			.select(reg_ex_mem_out[0])
 	);
 
-	// 32 + 0 = 43 bits data, with no added control yet
+	// 32 + 0 = 32 bits data, with no added control yet
 	
 	// Instructions
 	Register #(.width(32)) IF_ID_register(
@@ -159,7 +159,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	);
 
 	// 32 bits data from ALU
-	// 32 bits mem_forward_b
+	// 32 bits ex_forward_out_b
 	// [4:0] Aw
 	// RegWr
 	// RegDst
