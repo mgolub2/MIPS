@@ -218,6 +218,6 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	assign seOut = reg_id_ex_out[75:44];
 
 	// Output  to program counter
-	assign reg_Da = Da;
+	assign reg_Da = ex_forward_out_a;
 
 endmodule
