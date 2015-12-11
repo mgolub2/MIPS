@@ -6,7 +6,8 @@ from slides 88 and 89.
 module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 					MemToReg, seOut, Instructions, reg_Da, rst,
 					mem_forward_a, ex_forward_a, mem_forward_b,
-					ex_forward_b, ex_int_forward, mem_int_forward);
+					ex_forward_b, if_id_forward, ex_int_forward, 
+					mem_int_forward);
 
 	// Control signals
 	input clk, rst, RegDst, RegWr, ALUsrc, MemWr, MemToReg, mem_forward_a, ex_forward_a, mem_forward_b, ex_forward_b;
@@ -21,7 +22,8 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	//output for jr from da
 	output [31:0] reg_Da;
 
-	//output of intructions 1 and 2 cycles back
+	//output of intructions, delayed 1 and 2 cycles back
+	output [31:0] if_id_forward;
 	output [31:0] ex_int_forward;
 	output [31:0] mem_int_forward;
 
@@ -49,7 +51,12 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	wire [31:0] mem_forward_out_b;
 	wire [31:0] mem_forward_out_a;
 
-	assign ex_int_forward = reg_if_id_out;
+	wire [31:0] instr_delay_1;
+	wire [31:0] instr_delay_2;
+
+	assign if_id_forward = reg_if_id_out;
+	assign ex_int_forward = instr_delay_1;
+	assign mem_int_forward = instr_delay_2;
 
 	// Selects reg address to which to write.
 	Mux_32_2x1 #(.width(5)) regDstMux(
@@ -185,10 +192,18 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 			.rst(rst)
 	);
 
+	//Register to hold an instruction one back from what is currently being fetched. 
+	Register #(.width(32)) ONE_DEL_register(
+		.data_in (reg_if_id_out),
+		.data_out(instr_delay_1),
+		.clk(clk),
+		.rst(rst)
+	);
+
 	//Register to hold an instruction two back from what is currently being fetched. 
 	Register #(.width(32)) TWO_DEL_register(
-		.data_in (reg_if_id_out),
-		.data_out(mem_int_forward),
+		.data_in (instr_delay_1),
+		.data_out(instr_delay_2),
 		.clk(clk),
 		.rst(rst)
 	);

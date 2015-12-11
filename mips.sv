@@ -31,6 +31,7 @@ module mips (clk, rst);
 	wire [31:0] signExtend;
 	wire [31:0] mem_int_forward;
 	wire [31:0] ex_int_forward;
+	wire [31:0] if_id_forward;
 	wire [31:0] reg_Da;
 	//wire [25:0] target_inst_del;
 	wire [1:0] ALUcntrl;
@@ -53,6 +54,7 @@ module mips (clk, rst);
 		.ex_forward_a   (ex_forward_a),
 		.mem_forward_b  (mem_forward_b),
 		.ex_forward_b   (ex_forward_b),
+		.if_id_forward  (if_id_forward),
 		.ex_int_forward (ex_int_forward),
 		.mem_int_forward(mem_int_forward)
 	);
@@ -81,7 +83,7 @@ module mips (clk, rst);
 		.branch_del		(branch_del), //also this
 		.clk			(clk),
 		.rst            (rst),
-		.instruction 	(Instructions),
+		.instruction 	(if_id_forward),
 		.mem_forward_a	(mem_forward_a),
 		.ex_forward_a 	(ex_forward_a),
 		.mem_forward_b	(mem_forward_b),
