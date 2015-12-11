@@ -39,7 +39,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	wire overflow, carryout, Negative, Zero;
 
 	// Wires for stage registers
-	wire [42:0] reg_if_id_out;
+	wire [31:0] reg_if_id_out;
 	wire [107:0] reg_id_ex_out;
 	wire [72:0] reg_ex_mem_out;
 	wire [38:0] reg_mem_wr_out;
@@ -49,13 +49,13 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	wire [31:0] mem_forward_out_b;
 	wire [31:0] mem_forward_out_a;
 
-	assign ex_int_forward = reg_if_id_out[39:7];
+	assign ex_int_forward = reg_if_id_out;
 
 	// Selects reg address to which to write.
 	Mux_32_2x1 #(.width(5)) regDstMux(
 			.out(Aw), 
 			.in({Rd, Rt}), 
-			.select(reg_if_id_out[5])
+			.select(RegDst)
 	);
 
 	// Extends imm_16 bits.
@@ -95,25 +95,25 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 	Mux_32_2x1 EXForwardMuxA(
 		.out(ex_forward_out_a),
 		.in({ALUout, mem_forward_out_a}),
-		.select(reg_if_id_out[42])
+		.select(ex_forward_a)
 	);
 
 	Mux_32_2x1 EXForwardMuxB(
 		.out(ex_forward_out_b),
 		.in({ALUout, mem_forward_out_b}),
-		.select(reg_if_id_out[41])	
+		.select(ex_forward_b)	
 	);
 	//Forward the value from the mem stage, or the standard register value.
 	Mux_32_2x1 MEMForwardMuxA(
 		.out(mem_forward_out_a),
 		.in({Dw, Da}),
-		.select(reg_if_id_out[40])
+		.select(mem_forward_a)
 	);
 
 	Mux_32_2x1 MEMForwardMuxB(
 		.out(mem_forward_out_b),
 		.in({Dw, Db}),
-		.select(reg_if_id_out[39])	
+		.select(mem_forward_b)	
 	);
 
 	// Data memory unit
@@ -131,46 +131,35 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 			.select(reg_ex_mem_out[0])
 	);
 
-	// 39+4 = 43 bits data, with no added control yet
-	// ex_forward_a
-	// ex_forward_b
-	// mem_forward_a
-	// mem_forward_b
+	// 32 + 0 = 43 bits data, with no added control yet
+	
 	// Instructions
-	// RegWr
-	// RegDst
-	// MemWr
-	// MemToReg
-	// ALUsrc
-	// [1:0] ALUcntrl
-	Register #(.width(43)) IF_ID_register(
-			.data_in({ex_forward_a, ex_forward_b, mem_forward_a, mem_forward_b, Instructions, RegWr, RegDst, MemWr, MemToReg, ALUsrc, ALUcntrl}), 
+	Register #(.width(32)) IF_ID_register(
+			.data_in(Instructions), 
 			.data_out(reg_if_id_out), 
 			.clk(clk), 
 			.rst(rst)
 	);
 
-	// 32 bits Da
-	// 32 bit SE
-	// 32 bits Db
-	// [4:0] Aw
+	// 32 bit ex_forward_out_a
+	// 32 bit se32
+	// 32 bit ex_forward_out_b
+	// [4:0] aw
 	// RegWr
-	// RegDst
+	// RegDest
 	// MemWr
 	// MemToReg
 	// ALUsrc
 	// [1:0] ALUcntrl
-	// 108 total
 	Register #(.width(108)) ID_EX_register(
-			//.data_in({Da, se32, Db, Aw, reg_if_id_out[6:0]}),
-			.data_in({ex_forward_out_a, se32, ex_forward_out_b, Aw, reg_if_id_out[6:0]}), 
+			.data_in({ex_forward_out_a, se32, ex_forward_out_b, Aw, RegWr, RegDst, MemWr, MemToReg, ALUsrc, ALUcntrl}),
 			.data_out(reg_id_ex_out), 
 			.clk(clk), 
 			.rst(rst)
 	);
 
 	// 32 bits data from ALU
-	// 32 bits Db
+	// 32 bits mem_forward_b
 	// [4:0] Aw
 	// RegWr
 	// RegDst
@@ -198,19 +187,19 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 
 	//Register to hold an instruction two back from what is currently being fetched. 
 	Register #(.width(32)) TWO_DEL_register(
-		.data_in (reg_if_id_out[38:7]),
+		.data_in (reg_if_id_out),
 		.data_out(mem_int_forward),
 		.clk(clk),
 		.rst(rst)
 	);
 
 	// Connect register addresses from instruction fetch.
-	assign Rs = reg_if_id_out[32:28];
-	assign Rt = reg_if_id_out[27:23];
-	assign Rd = reg_if_id_out[22:18];
+	assign Rs = reg_if_id_out[25:21];
+	assign Rt = reg_if_id_out[20:16];
+	assign Rd = reg_if_id_out[15:11];
 
 	// Connect Imm16.
-	assign Imm16 = reg_if_id_out[22:7];
+	assign Imm16 = reg_if_id_out[15:0];
 
 	// Connect output to out of reg/dec stage.
 	assign seOut = reg_id_ex_out[75:44];
