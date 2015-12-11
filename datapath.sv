@@ -55,6 +55,7 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 
 	assign if_id_forward = reg_if_id_out;
 	assign ex_int_forward = instr_delay_1;
+	assign seOut = se32;
 
 	// Selects reg address to which to write.
 	Mux_32_2x1 #(.width(5)) regDstMux(
@@ -213,9 +214,6 @@ module datapath(clk, RegDst, RegWr, ALUsrc, ALUcntrl, MemWr,
 
 	// Connect Imm16.
 	assign Imm16 = reg_if_id_out[15:0];
-
-	// Connect output to out of reg/dec stage.
-	assign seOut = reg_id_ex_out[75:44];
 
 	// Output  to program counter
 	assign reg_Da = ex_forward_out_a;

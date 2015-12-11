@@ -31,6 +31,7 @@ module pc(inst, target_inst, seIn, jump, branch, clk, rst, reg_Da);
 	wire [29:0] program_counter;
 	wire [31:0] sign_ex_mux_out;
 	wire [31:0] jump_mux_out;
+	wire not_branch;
 
 	//This could be assign statement....
 	concat pc_concat(
@@ -52,7 +53,7 @@ module pc(inst, target_inst, seIn, jump, branch, clk, rst, reg_Da);
 		.overflow(), 
 		.A({2'b00, program_counter}), 
 		.B(sign_ex_mux_out), 
-		.Cin(1'b1)
+		.Cin(not_branch)
 	);
 
 	//30 bit program counter
@@ -90,5 +91,7 @@ module pc(inst, target_inst, seIn, jump, branch, clk, rst, reg_Da);
 	and #(DELAY) branchnegative(branch_and_negative, branch, reg_Da[31]);
 	//and for jr 
 	and #(DELAY) jumpandbranch(jump_r, jump, branch);
+
+	not #(DELAY) notBranch(not_branch, branch_and_negative);
 
 endmodule // program_counter
