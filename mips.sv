@@ -17,28 +17,31 @@ SLTU rd, rs, rt: Reg[rs] and Reg[rt] are considered to be unsigned numbers.
 If (Reg[rs] < Reg[rt]) Reg[rd] = 0000000116
 else Reg[rd] = 0000000016.
 SUBU rd, rs, rt: Reg[rd] = Reg[rs] – Reg[rt]. This is normal, 2’s complement subtraction. The difference
-between “sub” and “subu” is that “subu” completely ignores overflow, where “sub” will cause an
+between “sub�? and “subu�? is that “subu�? completely ignores overflow, where “sub�? will cause an
 exception if an overflow occurs.
 SW rt, imm16(rs): Mem[Reg[rs] + Sign_ext(Imm16)] = Reg[rt].
 
 */
 
-module mips (clk, rst);
+module mips (clk, rst, led );
 
 	input clk, rst;
+	output [15:0] led;
 
-	wire [31:0] Instructions;
-	wire [31:0] signExtend;
-	wire [31:0] mem_int_forward;
-	wire [31:0] ex_int_forward;
-	wire [31:0] if_id_forward;
-	wire [31:0] reg_Da;
+    assign led = Instructions[15:0];
+
+	(* keep = "true" *) wire [31:0] Instructions;
+	(* keep = "true" *) wire [31:0] signExtend;
+	(* keep = "true" *) wire [31:0] mem_int_forward;
+	(* keep = "true" *) wire [31:0] ex_int_forward;
+	(* keep = "true" *) wire [31:0] if_id_forward;
+	(* keep = "true" *) wire [31:0] reg_Da;
 	//wire [25:0] target_inst_del;
-	wire [1:0] ALUcntrl;
-	wire Negative, RegDst, RegWr, ALUsrc, MemWr, MemToReg, jump, branch, ex_forward_a, ex_forward_b, mem_forward_a, mem_forward_b;
+	(* keep = "true" *) wire [1:0] ALUcntrl;
+	(* keep = "true" *) wire Negative, RegDst, RegWr, ALUsrc, MemWr, MemToReg, jump, branch, ex_forward_a, ex_forward_b, mem_forward_a, mem_forward_b;
 
 	//regfile and data memory, with an ALU between
-	datapath data(
+	(* keep = "true" *) datapath data(
 		.clk		    (clk), 
 		.rst            (rst),
 		.RegDst		    (RegDst), 
@@ -60,7 +63,7 @@ module mips (clk, rst);
 	);
 
 	//Program counter, reads from intruction memory
-	pc program_counter(
+	(* keep = "true" *) pc program_counter(
 		.inst 			(Instructions), 
 		.target_inst    (if_id_forward[25:0]), //for a jump, this will be the target instruction
 		.seIn 			(signExtend), 
@@ -71,7 +74,7 @@ module mips (clk, rst);
 		.reg_Da     	(reg_Da)
 	);
 
-	control control_logic(
+	(* keep = "true" *) control control_logic(
 		//.target_inst	(target_inst_del),
 		.RegDst			(RegDst),
 		.RegWr			(RegWr),
