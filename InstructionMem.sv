@@ -43,9 +43,9 @@ module InstructionMem(instruction, address);
 		temp = instrmem[address/4];
 	end
 
-	initial begin
+	/*initial begin
 		$readmemb("instr.dat", instrmem);
-	end
+	end*/
 endmodule
 
 /*
